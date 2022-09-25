@@ -132,8 +132,6 @@
     padding-left: 53px;
     padding-right: 53px;
     padding-bottom: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
     gap: 10px;
   }
 }
