@@ -4,7 +4,7 @@ import './MovieCardList.css';
 import  MoviesCard from '../MoviesCard/MoviesCard';
 import { Preloader } from '../Preloader/Preloader';
 
-function MoviesCardList( ) {
+function MoviesCardList() {
   return (
 <section className="movie-card-list">
 <Preloader />

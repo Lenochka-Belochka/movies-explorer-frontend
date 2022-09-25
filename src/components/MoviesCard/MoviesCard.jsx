@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
-import card from "../../images/card.png";
+import card from "../../images/pic__COLOR_pic.svg";
 
 function MoviesCard() {
   const { pathname } = useLocation();
@@ -28,11 +28,14 @@ function MoviesCard() {
         src={card}
         alt="карточка фильма"
       />
-          <button
+   <div className="card__button">
+        <button
           type="button"
           onClick={setFavoriteMovie}
           className={(cardIcon)}
         ></button>
+    </div>
+
   </li>
 );
 }

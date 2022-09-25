@@ -19,6 +19,7 @@
   font-size: 13px;
   line-height: 17px;
   margin-right: 10px;
+  border-radius: 4px;
 }
 
 .search__input:focus{
@@ -31,7 +32,7 @@
   width: 70px;
   height: 44px;
   border: none;
-  background-image: url("../../images/find-2.png");
+  background-image: url("../../images/find-2.svg");
   background-color: none;
   transition: opacity .3s;
 }

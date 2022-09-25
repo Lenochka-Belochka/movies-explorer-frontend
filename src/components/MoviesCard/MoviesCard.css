@@ -19,8 +19,8 @@
   padding: 14px;
 }
 .card__delete {
-  margin: 18px 130px;
-  background-image: url("../../images/d6.png");
+  margin-top: 18px;
+  background-image: url("../../images/d6.svg");
   width: 100px;
   height: 29px;
   cursor: pointer;
@@ -28,17 +28,22 @@
   border: none;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: white;
+}
+.card__button{
+  display: flex;
+  justify-content: center;
 }
 .card__like {
-  margin: 18px 130px;
+  margin-top: 18px;
   width: 100px;
   height: 29px;
   cursor: pointer;
   border: none;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url("../../images/save6.png");
-  background-color: none;
+  background-image: url("../../images/save6.svg");
+  background-color: white;
 }
 .card__like_active {
   margin: 18px 130px;
