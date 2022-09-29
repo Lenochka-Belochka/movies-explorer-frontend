@@ -199,18 +199,15 @@
   }
 }
 
-/*
-Нужно будет для валидации на следующем этапе
 
-.login__input_invalid {
+.login__input_error {
   color: #ee3465;
   margin-bottom: 6px;
 }
 
-.login__button_invalid {
+.login__button_disabled {
   border: 1px solid rgba(0, 0, 0, 0.2);
   color: rgba(0, 0, 0, 0.2);
   background: white;
   cursor: auto;
 }
-*/

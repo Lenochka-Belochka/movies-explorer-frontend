@@ -71,6 +71,21 @@
   background-color: #F9F9F9;
   width: 396px;
 }
+.register__input_error {
+  color: #ee3465;
+}
+.register__error {
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #ee3465;
+  margin: 0;
+  min-height: 12px;
+}
+
 
 .register__links {
   display: flex;
@@ -105,8 +120,8 @@
 .register__button {
   width: 396px;
   height: 45px;
-  border: 0;
   border-radius: 3px;
+  border: 0;
   background: #3456F3;
   font-size: 14px;
   font-style: normal;
@@ -115,11 +130,17 @@
   letter-spacing: 0em;
   text-align: center;
   color: #ffffff;
-  margin-top: 69px;
   margin-bottom: 16px;
   cursor: pointer;
   transition: 1s;
 }
+.register__button_disabled {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.2);
+  background: white;
+  cursor: auto;
+}
+
 .register__button:hover {
   opacity: 0.7;
 }
@@ -189,28 +210,4 @@
   }
 }
 
-/*
-Для настройки валидации на следующем этвпе
-.register__input_invalid {
-  color: #ee3465;
-  margin-bottom: 6px;
-}
-.register__error {
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 12px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #ee3465;
-  margin: 0;
-  min-height: 12px;
-}
 
-.register__button_invalid {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  color: rgba(0, 0, 0, 0.2);
-  background: white;
-  cursor: auto;
-}
-*/
