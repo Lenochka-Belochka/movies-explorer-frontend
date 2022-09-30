@@ -150,10 +150,7 @@
 }
 
 
-/*
-Для настройки валидации на следующем этапе
-
-.profile__error {
+.profile__input_error {
   font-family: "Inter", Arial, Helvetica, sans-serif;
   font-size: 10px;
   font-style: normal;
@@ -173,4 +170,4 @@
   background: white;
   cursor: auto;
 }
-*/
+

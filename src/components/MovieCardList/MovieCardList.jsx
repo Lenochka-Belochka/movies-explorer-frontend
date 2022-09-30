@@ -3,24 +3,72 @@ import './MovieCardList.css';
 
 import  MoviesCard from '../MoviesCard/MoviesCard';
 import { Preloader } from '../Preloader/Preloader';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import useScreenWidth from '../../hooks/useScreenWidth.jsx';
+import { DEVICE_PARAMS } from '../../utils/constants.js';
+import { getSavedMovieCard } from '../../utils/utils.js';
 
-function MoviesCardList() {
-  return (
+export default function MoviesCardList({ moviesList, savedMoviesList, onLikeClick, onDeleteClick }) {
+  const screenWidth = useScreenWidth();
+
+  const { desktop, tablet, mobile } = DEVICE_PARAMS;
+  const [isMount, setIsMount] = useState(true);
+  const [showMovieList, setShowMovieList] = useState([]);
+  const [cardsShowDetails, setCardsShowDetails] = useState({ total: 12, more: 3 });
+
+  const location = useLocation();
+
+  // количество отображаемых карточек при разной ширине экрана
+  useEffect(() => {
+    if (location.pathname === '/movies') {
+      if (screenWidth > desktop.width) {
+        setCardsShowDetails(desktop.cards);
+      } else if (screenWidth <= desktop.width && screenWidth > mobile.width) {
+        setCardsShowDetails(tablet.cards);
+      } else {
+        setCardsShowDetails(mobile.cards);
+      }
+      return () => setIsMount(false);
+    }
+  }, [screenWidth, isMount, desktop, tablet, mobile, location.pathname]);
+
+  // изменяем отображаемый массив фильмов в зависимости от ширины экрана
+  useEffect(() => {
+    if (moviesList.length) {
+      const res = moviesList.filter((item, i) => i < cardsShowDetails.total);
+      setShowMovieList(res);
+    }
+  }, [moviesList, cardsShowDetails.total]);
+
+  // добавление карточек при клике по кнопке "Еще"
+  function handleClickMoreMovies() {
+    const start = showMovieList.length;
+    const end = start + cardsShowDetails.more;
+    const additional = moviesList.length - start;
+
+    if (additional > 0) {
+      const newCards = moviesList.slice(start, end);
+      setShowMovieList([...showMovieList, ...newCards]);
+    }
+  }
+    return (
 <section className="movie-card-list">
 <Preloader />
 
 <ul className="movies__gallery">
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
+{showMovieList.map(movie => (
+        <MoviesCard
+        key={movie.id || movie._id}
+        saved={getSavedMovieCard(savedMoviesList, movie)}
+        onLikeClick={onLikeClick}
+        onDeleteClick={onDeleteClick}
+        movie={movie}/>
+        ))}
       </ul>
-					<button className="movies__button" type="more" label="Ещё"> Ещё </button>
+      {location.pathname === '/movies' && showMovieList.length >= 5 && showMovieList.length < moviesList.length && (
+					<button className="movies__button" type="more" label="Ещё" onClick={handleClickMoreMovies}> Ещё </button>
+          )}
     </section>
   );
 }
-
-export default MoviesCardList;
-

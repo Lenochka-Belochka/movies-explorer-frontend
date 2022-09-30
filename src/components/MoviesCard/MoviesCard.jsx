@@ -1,43 +1,54 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import "./MoviesCard.css";
-import card from "../../images/pic__COLOR_pic.svg";
+  import './MoviesCard.css';
+  import { useLocation } from 'react-router-dom';
+  import { transformDuration } from '../../utils/utils.js';
 
-function MoviesCard() {
-  const { pathname } = useLocation();
+  export default function MoviesCard({ movie, saved, onLikeClick, onDeleteClick }) {
+    const location = useLocation();
 
-  const [favoriteMovie, setFavoriteMovie] = useState(false);
-  const likeIcon = favoriteMovie
-    ? "card__like_active"
-    : "card__like";
+    // сохранение фильма
+    function handleLikeClick() {
+      onLikeClick(movie);
+    }
 
-  const cardIcon = pathname === "/movies" ? likeIcon : "card__delete";
+    // удаление фильма
+    function handleDeleteClick() {
+      onDeleteClick(movie);
+    }
 
   return (
     <li className="card">
     <div className="card__head">
       <div className="card__name">
-        <p className="card__title">Какой-то фильм</p>
+        <p className="card__title">{movie.nameRU}</p>
       </div>
       <div className="card__name">
-        <p className="card__time">1 час 10 мин</p>
+        <p className="card__time"> {transformDuration(movie.duration)}
+</p>
       </div>
     </div>
+    <a target="_blank" rel="noreferrer" href={movie.trailerLink}>
       <img
-        className="card__image"
-        src={card}
-        alt="карточка фильма"
+        src={movie.image}
+          alt={movie.nameRU}
+          title={`Описание: ${movie.description} \n\nСнято: ${movie.country} ${movie.year}г.`}
+          className="card__image"
       />
+      </a>
    <div className="card__button">
         <button
           type="button"
-          onClick={setFavoriteMovie}
-          className={(cardIcon)}
-        ></button>
+          onClick={saved ? handleDeleteClick : handleLikeClick}
+          aria-label={`${
+            saved ? 'Удалить фильм из сохранённых' : 'Сохранить фильм'
+          }`}
+          title={`${
+            saved ? 'Удалить фильм из сохранённых' : 'Сохранить фильм'
+          }`}
+          className={`card__like_active card__like_${
+            saved ? 'saved' : 'save'
+          }`}        ></button>
     </div>
 
   </li>
 );
 }
-
-export default MoviesCard;
