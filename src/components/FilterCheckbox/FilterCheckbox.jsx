@@ -1,13 +1,35 @@
-import './FilterCheckbox.css';
+import { useLocation } from "react-router-dom";
+import "./FilterCheckbox.css";
+export const FilterCheckbox = ({
+  isFindMovies,
+  changeFilter,
+  isSavedMovies,
+}) => {
+  const location = useLocation();
+  const locationMovies = location.pathname === "/movies";
 
-export default function FilterCheckbox() {
+  let checkboxClassName = `filter-checkbox__button ${
+    locationMovies && isFindMovies
+      ? "filter-checkbox__button_inactive"
+      : "filter-checkbox__button"
+  } ${
+    !locationMovies && isSavedMovies
+      ? "filter-checkbox__button_inactive"
+      : "filter-checkbox__button"
+  }`;
+
+  function handleChangeFilter() {
+    changeFilter();
+  }
+
   return (
     <div className="search__all-movies-finder">
-    <label className="switch">
-      <input type="checkbox" className="switch__checkbox" />
-      <span className="switch__slider"></span>
-    </label>
-    <span className="search__caption">Короткометражки</span>
-  </div>
+      <button
+        onClick={handleChangeFilter}
+        type="button"
+        className={checkboxClassName}
+      ></button>
+      <p className="filter-checkbox__text">Короткометражки</p>
+      </div>
   );
-}
+};

@@ -1,64 +1,68 @@
-import React from 'react';
-import './Login.css';
-import { useEffect } from 'react';
-import useFormWithValidation from '../../hooks/useFormWithValidation.jsx';
+import "./Login.css";
+import { Link } from "react-router-dom";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+import React from "react";
 
-import { Link } from 'react-router-dom';
-// import logo from '../../images/logo.svg';
-
-export default function Login({ handleLogin }) {
-  const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
-
-  function handleSubmit(e) {
+export const Login = ({ onLogin, clearErrors, loginError, setLoginError }) => {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
+  function handleLogin(e) {
     e.preventDefault();
-    handleLogin(values);
-  }
-
-  useEffect(() => {
+    onLogin({ email: values.email, password: values.password });
     resetForm();
-  }, [resetForm]);
-    return (
+  }
+  function handleClearErrors() {
+    resetForm();
+    clearErrors();
+  }
+  function handleChangeInput(e) {
+    handleChange(e);
+    if (loginError.length > 0) {
+      setLoginError("");
+    }
+  }
+  return (
     <section className="login">
       <Link to="/" className="login__logo"></Link>
       <h1 className="login__title">Рады видеть!</h1>
-      <form className="login__form" name="login"
-        noValidate
-        onSubmit={handleSubmit}>
+      <form className="login__form" onSubmit={handleLogin}>
         <fieldset className="login__fieldset">
           <div className="login__field">
-            <p className="login__text" htmlFor='email'>E-mail</p>
+            <p className="login__text">E-mail</p>
             <input
-              type='email'
-              placeholder='Введите E-mail'
+              className="login__input"
+              type="email"
               name="email"
-              className={`login__input ${errors.email && 'login__input_error'}`}
-              onChange={handleChange}
-              value={values.email || ''}
+              value={values.email || ""}
+              onChange={handleChangeInput}
               required
+              autoComplete="off"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             />
-    <span className="login__error">{errors.email || ''}</span>
+            <span className="login__error">{errors.email}</span>
           </div>
           <div className="login__field">
-            <p className="login__text" htmlFor='password'>Пароль</p>
+            <p className="login__text">Пароль</p>
             <input
-               type='password'
-               placeholder='Введите пароль'
-               name="password"
-              className={`login__input ${
-                errors.password && 'login__input_error'
-              }`}
-              onChange={handleChange}
-              value={values.password || ''}
+              className="login__input"
+              type="password"
+              name="password"
+              value={values.password || ""}
+              onChange={handleChangeInput}
               required
+              minLength="8"
+              autoComplete="off"
             />
-   <span className="login__error">{errors.password || ''}</span>
+            <span className="login__error">{errors.password}</span>
           </div>
         </fieldset>
         <div className="login__bottom">
-          <span className="login__error"></span>
+          <span className="login__error">{loginError}</span>
           <button
+            className={
+              isValid ? "login__button" : "login__button login__button_invalid"
+            }
             type="submit"
-            className={`login__button ${!isValid && 'login__button_disabled'}`}
             disabled={!isValid}
           >
             Войти
@@ -68,6 +72,7 @@ export default function Login({ handleLogin }) {
             <Link
               className="login__link"
               to="/signup"
+              onClick={handleClearErrors}
             >
               Регистрация
             </Link>
@@ -77,4 +82,3 @@ export default function Login({ handleLogin }) {
     </section>
   );
 };
-

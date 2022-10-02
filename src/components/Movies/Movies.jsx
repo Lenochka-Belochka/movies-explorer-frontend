@@ -1,133 +1,119 @@
-import Header from "../Header/Header";
+import React from "react";
+import { Header } from "../Header/Header";
+import { MovieCardList } from "../MovieCardList/MovieCardList";
+import { SearchForm } from "../SearchForm/SearchForm";
 import { Footer } from "../Footer/Footer";
-import SearchForm from "../SearchForm/SearchForm";
-import MoviesCardList from "../MovieCardList/MovieCardList";
-import { useState, useContext, useEffect } from 'react';
-import {
-  transformMovies, // для адаптирования полей под свой бэкенд
-  filterMovies, // фильтрация начального массива всех фильмов по запросу
-  filterShortMovies, // фильтрация по длительности
-} from '../../utils/utils.js';
-import moviesApi from '../../utils/MoviesApi.js';
-import CurrentUserContext from '../../contexts/CurrentUserContext.jsx';
+import "./Movies.css";
 
-export default function Movies({ setIsLoader, setIsInfoTooltip, savedMoviesList, onLikeClick, onDeleteClick }) {
-  const currentUser = useContext(CurrentUserContext);
+export const Movies = ({
+  isLogged,
+  changeFilter,
+  isFindMovies,
+  moviesAll,
+  searchSavedMovies,
+  searchMovies,
+  isLoadingFilm,
+  savedMovies,
+  movieDeleteFromSaved,
+  movieSaveInSaved,
+  searchError,
+  serverError,
+  clearAllErrors,
+}) => {
+  React.useEffect(() => {
+    clearAllErrors();
+  }, []);
 
-  const [shortMovies, setShortMovies] = useState(false); // состояние чекбокса
-  const [initialMovies, setInitialMovies] = useState([]); // фильмы полученные с запроса
-  const [filteredMovies, setFilteredMovies] = useState([]); // отфильтрованные по чекбоксу и запросу фильмы
-  const [NotFound, setNotFound] = useState(false); // если по запросу ничего не найдено - скроем фильмы
-  const [isAllMovies, setIsAllMovies] = useState([]); // все фильмы от сервера, для единоразового обращения к нему
-
-
-
-  function handleSetFilteredMovies(movies, userQuery, shortMoviesCheckbox) {
-    const moviesList = filterMovies(movies, userQuery, shortMoviesCheckbox);
-    if (moviesList.length === 0) {
-      setIsInfoTooltip({
-        isOpen: true,
-        successful: false,
-        text: 'Ничего не найдено.',
-      });
-      setNotFound(true);
-    } else {
-      setNotFound(false);
+  const [numberMoviesOnScreen, setNumberMoviesOnScreen] = React.useState(
+    () => {
+      const windowWidth = window.innerWidth;
+      if (windowWidth > 1279) {
+        return 16;
+      } else if (windowWidth >= 990) {
+        return 12;
+      } else if (windowWidth >= 500) {
+        return 8;
+      } else return 5;
     }
-    setInitialMovies(moviesList);
-    setFilteredMovies(
-      shortMoviesCheckbox ? filterShortMovies(moviesList) : moviesList
-    );
-    localStorage.setItem(
-      `${currentUser.email} - movies`,
-      JSON.stringify(moviesList)
-    );
-  }
-
-  // поиск по запросу
-  function handleSearchSubmit(inputValue) {
-    localStorage.setItem(`${currentUser.email} - movieSearch`, inputValue);
-    localStorage.setItem(`${currentUser.email} - shortMovies`, shortMovies);
-
-    if (isAllMovies.length === 0) {
-      setIsLoader(true);
-      moviesApi
-        .getMovies()
-        .then(movies => {
-          setIsAllMovies(movies);
-          handleSetFilteredMovies(
-            transformMovies(movies),
-            inputValue,
-            shortMovies
-          );
-        })
-        .catch(() =>
-          setIsInfoTooltip({
-            isOpen: true,
-            successful: false,
-            text: 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.',
-          })
-        )
-        .finally(() => setIsLoader(false));
-    } else {
-      handleSetFilteredMovies(isAllMovies, inputValue, shortMovies);
-    }
-  }
-
-  // состояние чекбокса
-  function handleShortFilms() {
-    setShortMovies(!shortMovies);
-    if (!shortMovies) {
-      setFilteredMovies(filterShortMovies(initialMovies));
-    } else {
-      setFilteredMovies(initialMovies);
-    }
-    localStorage.setItem(`${currentUser.email} - shortMovies`, !shortMovies);
-  }
-
-  // проверка чекбокса в локальном хранилище
-  useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true') {
-      setShortMovies(true);
-    } else {
-      setShortMovies(false);
-    }
-  }, [currentUser]);
-
-  // рендер фильмов из локального хранилища
-  useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - movies`)) {
-      const movies = JSON.parse(
-        localStorage.getItem(`${currentUser.email} - movies`)
-      );
-      setInitialMovies(movies);
-      if (
-        localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true'
-      ) {
-        setFilteredMovies(filterShortMovies(movies));
-      } else {
-        setFilteredMovies(movies);
-      }
-    }
-  }, [currentUser]);
-
-  return (
-<main className="movies">
-      <SearchForm
-        handleSearchSubmit={handleSearchSubmit}
-        handleShortFilms={handleShortFilms}
-        shortMovies={shortMovies}
-      />
-      {!NotFound && (
-        <MoviesCardList
-          moviesList={filteredMovies}
-          savedMoviesList={savedMoviesList}
-          onLikeClick={onLikeClick}
-          onDeleteClick={onDeleteClick}
-        />
-      )}
-    </main>
   );
-}
 
+  const [numberMoviesAdd, setNumberMoviesAdd] = React.useState(() => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth > 1279) {
+      return 4;
+    } else if (windowWidth >= 990) {
+      return 3;
+    } else if (windowWidth >= 500) {
+      return 2;
+    } else return 2;
+  });
+  function onChangeScreenWidth() {
+    const windowWidth = window.innerWidth;
+    if (windowWidth > 1279) {
+      setNumberMoviesOnScreen(16);
+      setNumberMoviesAdd(4);
+    } else if (windowWidth >= 990) {
+      setNumberMoviesOnScreen(12);
+      setNumberMoviesAdd(3);
+    } else if (windowWidth >= 500) {
+      setNumberMoviesOnScreen(8);
+      setNumberMoviesAdd(2);
+    } else {
+      setNumberMoviesOnScreen(5);
+      setNumberMoviesAdd(2);
+    }
+  }
+  React.useEffect(() => {
+    window.addEventListener("resize", onChangeScreenWidth);
+  }, []);
 
+  const moviesAllVisible = moviesAll.slice(
+    0,
+    numberMoviesOnScreen
+  );
+  function addMoviesInCollectionVisible() {
+    setNumberMoviesOnScreen((prevState) => prevState + numberMoviesAdd);
+  }
+  return (
+    <section className="movies">
+      <Header
+        isLogged={isLogged}
+        isMain={false}
+        isMovies={true}
+        isSavedMovies={false}
+        isProfile={false}
+      />
+      <SearchForm
+        isSaved={false}
+        searchMovies={searchMovies}
+        searchSavedMovies={searchSavedMovies}
+        isFindMovies={isFindMovies}
+        changeFilter={changeFilter}
+      />
+      <MovieCardList
+        moviesAll={moviesAllVisible}
+        isSaved={false}
+        isLoadingFilm={isLoadingFilm}
+        savedMovies={savedMovies}
+        movieDeleteFromSaved={movieDeleteFromSaved}
+        movieSaveInSaved={movieSaveInSaved}
+        searchError={searchError}
+        serverError={serverError}
+      />
+      <div className="movie__more_container">
+      <button
+        type="button"
+        onClick={addMoviesInCollectionVisible}
+        className={
+          moviesAllVisible.length === moviesAll.length
+            ? "movies__button_hide"
+            : "movies__button"
+        }
+      >
+        Еще
+      </button>
+      </div>
+      <Footer />
+    </section>
+  );
+};

@@ -1,15 +1,16 @@
 
-
-.search {
+.search{
   padding: 60px 70px 0;
 }
-
 .search__container {
   min-height: 46px;
   display: flex;
   justify-content: space-between;
 }
 
+.search__form{
+  padding-top: 0%;
+}
 .search__input {
   background-color: #F9F9F9;
   padding-left: 22px;

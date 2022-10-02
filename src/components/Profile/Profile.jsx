@@ -1,80 +1,130 @@
+import React from "react";
+import { Header } from "../Header/Header";
 import "./Profile.css";
-import Header from "../Header/Header";
-import { useEffect, useContext } from 'react';
-import useFormWithValidation from '../../hooks/useFormWithValidation.jsx';
-import CurrentUserContext from '../../contexts/CurrentUserContext.jsx';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+export const Profile = ({
+  isLogged,
+  onSignOut,
+  changeProfile,
+  profileError,
+  setProfileError,
+}) => {
+  const currentUser = React.useContext(CurrentUserContext);
+  const nameRef = React.useRef("");
+  const emailRef = React.useRef("");
+  const { handleChange, errors, isValid, resetForm } = useFormWithValidation({
+    name: nameRef.current.value,
+    email: emailRef.current.value,
+  });
 
+  const [isUpdate, setIsUpdate] = React.useState(false);
 
+  const onFormSumbit = (evt) => {
+    evt.preventDefault();
+    if (isValid) {
+      const name = nameRef.current.value;
+      const email = emailRef.current.value;
+      changeProfile({ name, email });
+      resetForm();
+    }
+  };
 
-export default function Profile({ handleSignOut, handleProfile }) {
-  const { values, handleChange, resetForm, errors, isValid } = useFormWithValidation();
-  const currentUser = useContext(CurrentUserContext); // подписка на контекст
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    handleProfile(values);
+  function handleClickSignOut() {
+    resetForm();
+    onSignOut();
   }
 
-  // после загрузки текущего пользователя из API
-  // его данные будут использованы в управляемых компонентах.
-  useEffect(() => {
-    if (currentUser) {
-      resetForm(currentUser, {}, true);
+  function handleChangeInput(e) {
+    handleChange(e);
+    if (profileError.length > 0) {
+      setProfileError("");
     }
-  }, [currentUser, resetForm]);
+  }
 
-  const requirementValidity = (!isValid || (currentUser.name === values.name && currentUser.email === values.email));
-
+  React.useEffect(() => {
+    if (
+      nameRef.current.value === currentUser.name &&
+      emailRef.current.value === currentUser.email
+    ) {
+      setIsUpdate(false);
+    } else {
+      setIsUpdate(true);
+    }
+  }, [
+    nameRef.current.value,
+    emailRef.current.value,
+    currentUser.name,
+    currentUser.email,
+  ]);
 
   return (
     <section className="profle">
-      <h1 className="profile__title">{`Привет, ${currentUser.name || ''}!`}</h1>
-      <form className="profile__form" noValidate onSubmit={handleSubmit}>
+      <Header
+        isLogged={isLogged}
+        isMain={false}
+        isProfile={true}
+        isMovies={false}
+        isSavedMovies={false}
+      />
+      <h1 className="profile__title">Привет, {currentUser.name}</h1>
+      <form className="profile__form" onSubmit={onFormSumbit}>
         <div className="profile__fields">
           <div className="profile__field">
-            <p className="profile__text" htmlFor='name'>Имя</p>
+          <p className="profile__text">Имя</p>
             <input
-               name="name"
-              className={`profile__input ${errors.name && 'profile__input_error'}`}
-              onChange={handleChange}
-              value={values.name || ''}
+              className="profile__input"
+              placeholder="Имя"
+              name="name"
+              ref={nameRef}
+              values={nameRef.current.value}
+              defaultValue={currentUser.name}
+              pattern="[а-яА-Яa-zA-ZёË\- ]{1,}"
               type="text"
-              required
+              onChange={handleChangeInput}
               minLength="2"
-              maxLength="30"
-              pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
+              required
+              autoComplete="off"
             />
+            <span className="profile__error">{errors.name}</span>
           </div>
           <div className="profile__field">
-            <p className="profile__text" htmlFor='email'>E-mail</p>
+            <p className="profile__text">E-mail</p>
             <input
-              className={`profile__input ${errors.email && 'profile__input_error'}`}
+              className="profile__input"
               name="email"
-              onChange={handleChange}
-              value={values.email || ''}
+              ref={emailRef}
+              defaultValue={currentUser.email}
+              values={emailRef.current.value}
+              onChange={handleChangeInput}
               type="email"
               required
+              autoComplete="off"
             />
+            <span className="profile__error">{errors.email}</span>
           </div>
         </div>
         <div className="profile__buttons">
           <button
+            className={
+              isValid
+                ? "profile__button-submit"
+                : "profile__button-submit profile__button_invalid"
+            }
+            disabled={!isValid || !isUpdate}
             type="submit"
-            className={`profile__button-submit ${requirementValidity ? 'profile__button_invalid' : ''}`}
-            disabled={requirementValidity ? true : false}
           >
             Редактировать
           </button>
           <button
             className="profile__button-logout"
             type="button"
-            onClick={handleSignOut}
+            onClick={handleClickSignOut}
           >
-            Выйти из аккаунта
+            Выйти из аккаунта{" "}
           </button>
         </div>
       </form>
     </section>
   );
 };
-
