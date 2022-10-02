@@ -1,26 +1,39 @@
-import React from 'react';
-import './MovieCardList.css';
-
-import  MoviesCard from '../MoviesCard/MoviesCard';
-import { Preloader } from '../Preloader/Preloader';
-
-function MoviesCardList() {
+import { MoviesCard } from "../MoviesCard/MoviesCard";
+import { Preloader } from "../Preloader/Preloader";
+import "./MovieCardList.css";
+export const MovieCardList = ({
+  moviesAll,
+  isSaved,
+  isLoadingFilm,
+  savedMovies,
+  movieDeleteFromSaved,
+  movieSaveInSaved,
+  searchError,
+  serverError,
+}) => {
   return (
-<section className="movie-card-list">
-<Preloader />
-
-<ul className="movies__gallery">
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
+    <section className="movie-card-list">
+      <Preloader isLoadingFilm={isLoadingFilm} />
+      <span className="search-form__error">
+        {searchError ? "Ничего не найдено" : ""}
+      </span>
+      <span className="server__error">
+        {serverError
+          ? "Проблема с данными,  невозможно добавить фильм в сохраненные"
+          : ""}
+      </span>
+      <ul className="movies__films">
+        {moviesAll.map((movies) => (
+          <MoviesCard
+            key={isSaved ? movies._id : movies.id}
+            movies={movies}
+            isSaved={isSaved}
+            savedMovies={savedMovies}
+            movieDeleteFromSaved={movieDeleteFromSaved}
+            movieSaveInSaved={movieSaveInSaved}
+          />
+        ))}
       </ul>
-					<button className="movies__button" type="more" label="Ещё"> Ещё </button>
     </section>
   );
-}
-
-export default MoviesCardList;
-
+};

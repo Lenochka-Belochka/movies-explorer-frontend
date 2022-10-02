@@ -1,43 +1,109 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import "./MoviesCard.css";
-import card from "../../images/pic__COLOR_pic.svg";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function MoviesCard() {
-  const { pathname } = useLocation();
+export const MoviesCard = ({
+  movies,
+  isSaved,
+  savedMovies,
+  movieDeleteFromSaved,
+  movieSaveInSaved,
+}) => {
+  const [isLike, setIsLike] = React.useState(false);
+  const currentUser = React.useContext(CurrentUserContext);
+  const nowMovieSaved = savedMovies.find(
+    (item) => item.nameRU === movies.nameRU && item.owner === currentUser._id
+  );
 
-  const [favoriteMovie, setFavoriteMovie] = useState(false);
-  const likeIcon = favoriteMovie
-    ? "card__like_active"
-    : "card__like";
+  const movie = {
+    country: movies.country || "Нет",
+    director: movies.director || "Нет",
+    duration: movies.duration || 0,
+    year: movies.year || "Нет",
+    description: movies.description || "Нет",
+    image: isSaved
+      ? movies.image
+      : `https://api.nomoreparties.co${movies.image.url}`,
+    trailerLink: isSaved ? movies.trailer : movies.trailerLink,
+    thumbnail: isSaved
+      ? movies.thumbnail
+      : `https://api.nomoreparties.co${movies.image.formats.thumbnail.url}`,
+    movieId: isSaved ? movies._id : movies.id,
+    nameRU: movies.nameRU || "Нет",
+    nameEN: movies.nameEN || "Нет",
+  };
 
-  const cardIcon = pathname === "/movies" ? likeIcon : "card__delete";
+  const cardLikeButtonClassName = `card__like ${
+    isLike ? "card__like_active" : " "
+  }`;
+
+  function handleLikeCard() {
+    if (!isLike) {
+      movieSaveInSaved(movie);
+    } else {
+      const searchMovie = savedMovies.find(
+        (item) => item.movieId === movies.id
+      );
+      movieDeleteFromSaved(searchMovie._id);
+      setIsLike(false);
+    }
+  }
+
+  function deleteCard() {
+    movieDeleteFromSaved(movies._id);
+  }
+  React.useEffect(() => {
+    if (nowMovieSaved) {
+      setIsLike(true);
+    }
+  }, [nowMovieSaved]);
+  const durationMovie = `${Math.trunc(movies.duration / 60)}ч ${
+    movies.duration % 60
+  }м`;
 
   return (
-    <li className="card">
-    <div className="card__head">
-      <div className="card__name">
-        <p className="card__title">Какой-то фильм</p>
+    <li className="card" id={isSaved ? movies._id : movies.id}>
+      <div className="card__head">
+        <div className="card__name">
+          <p className="card__title">{movies.nameRU}</p>
+        </div>
+        <div className="card__name">
+        <p className="card__time">{durationMovie}</p>
+        </div>
       </div>
-      <div className="card__name">
-        <p className="card__time">1 час 10 мин</p>
-      </div>
-    </div>
-      <img
-        className="card__image"
-        src={card}
-        alt="карточка фильма"
-      />
-   <div className="card__button">
-        <button
-          type="button"
-          onClick={setFavoriteMovie}
-          className={(cardIcon)}
-        ></button>
-    </div>
 
-  </li>
-);
-}
+      <a
+        href={movies.trailerLink}
+        className="card__link_trailer"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          className="card__image"
+          alt={movies.nameRU}
+          src={
+            isSaved
+              ? movies.image
+              : `https://api.nomoreparties.co${movies.image.url}`
+          }
+        />
+      </a>
 
-export default MoviesCard;
+      {isSaved ? (
+          <button
+            type="button"
+            onClick={deleteCard}
+            className={
+              movies.owner === currentUser._id ? "card__delete" : "none"
+            }
+          ></button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleLikeCard}
+            className={cardLikeButtonClassName}
+          ></button>
+        )}
+    </li>
+  );
+};

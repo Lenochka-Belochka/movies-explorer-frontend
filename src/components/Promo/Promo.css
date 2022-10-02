@@ -21,7 +21,6 @@
   .promo {
     width: 94.79%;
   }
-
   .promo__title {
     font-size: 40px;
     max-width: 680px;
@@ -29,7 +28,7 @@
     padding-bottom: 314px;
   }
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 480px) {
   .promo {
     width: 91.25%;
   }
@@ -42,4 +41,5 @@
     width: 91.25%;
   }
 }
+
 

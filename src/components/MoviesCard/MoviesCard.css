@@ -1,16 +1,30 @@
+
 .card {
   display: flex;
   flex-direction: column;
   height: 319px;
+  width: 360;
   list-style-type: none;
   background: #fdfdfd;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
 }
 .card__image {
-  width: 360;
   height: 200px;
   object-fit: cover;
-  cursor: pointer;
+  background-position: center;
+  width: 100%;
+
+}
+
+.card__link_trailer {
+  text-decoration: none;
+}
+.card__link_trailer:hover {
+  opacity: 0.8;
+}
+
+.none {
+  display: none;
 }
 
 .card__head {
@@ -29,13 +43,16 @@
   background-repeat: no-repeat;
   background-position: center;
   background-color: white;
+  align-self: center;
 }
 .card__button{
   display: flex;
   justify-content: center;
 }
+
+
 .card__like {
-  margin-top: 18px;
+  margin: 18px;
   width: 100px;
   height: 29px;
   cursor: pointer;
@@ -44,9 +61,10 @@
   background-repeat: no-repeat;
   background-image: url("../../images/save6.svg");
   background-color: white;
+  align-self: center;
 }
 .card__like_active {
-  margin: 18px 130px;
+  margin: 18px;
   width: 100px;
   height: 29px;
   cursor: pointer;
@@ -54,8 +72,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: url("../../images/save6d23.svg");
+  align-self: center;
 }
-
 .card__title {
   font-style: normal;
   font-weight: 500;
@@ -98,3 +116,4 @@
     margin: 14px 100px;
   }
 }
+

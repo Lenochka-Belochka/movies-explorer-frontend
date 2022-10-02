@@ -5,7 +5,19 @@
   justify-content: center;
   width: 100%;
 }
-
+.profile__error {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #ee3465;
+  margin: 0;
+  margin-bottom: 6px;
+  min-height: 12px;
+}
 .profile__title {
   font-style: normal;
   font-weight: 500;
@@ -29,7 +41,9 @@
 .profile__field {
   width: 410px;
   display: flex;
+  flex-direction:row;
   justify-content: space-between;
+  align-content: flex-end;
   border-bottom: 1px solid #e8e8e8;
   padding-bottom: 16px;
   margin-bottom: 17px;
@@ -40,6 +54,7 @@
   margin-bottom: 0;
 }
 .profile__text {
+  width: 50%;
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
@@ -47,12 +62,14 @@
   color: #000000;
 }
 .profile__input {
+  width: 50%;
   font-size: 11px;
   font-style: normal;
   font-weight: 400;
   line-height: 13px;
   letter-spacing: 0px;
-  text-align: right;
+  text-align:right;
+  align-items: flex-end;
   color: #000000;
   border: none;
 }
@@ -80,7 +97,11 @@
   cursor: pointer;
   background: #ffffff;
 }
-
+.profile__button_invalid {
+  color: rgba(0, 0, 0, 0.2);
+  background: white;
+  cursor: auto;
+}
 .profile__button-submit:hover {
   opacity: 0.7;
 }
@@ -148,29 +169,3 @@
     line-height: 15px;
   }
 }
-
-
-/*
-Для настройки валидации на следующем этапе
-
-.profile__error {
-  font-family: "Inter", Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 12px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #ee3465;
-  margin: 0;
-  margin-bottom: 6px;
-  min-height: 12px;
-}
-
-
-.profile__button_invalid {
-  color: rgba(0, 0, 0, 0.2);
-  background: white;
-  cursor: auto;
-}
-*/

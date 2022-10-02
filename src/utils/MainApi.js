@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.movies.nomoreparties.sbs";
+const BASE_URL = "https://api.movies.lunatic.luntic.nomoredomains.sbs";
 const handleResponse = (res) => {
   if (res.ok) return res.json();
   else return Promise.reject(res.status);

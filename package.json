@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build",
+    "deploy": "scp -r ./build/* lunatic@130.193.38.37:/home/lunatic/frontend/movies-explorer-frontend"
   },
   "eslintConfig": {
     "extends": [
