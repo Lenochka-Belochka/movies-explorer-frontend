@@ -1,4 +1,5 @@
 import "./Promo.css";
+import { NavTab } from "../NavTab/NavTab";
 
 function Promo(props) {
   return (
@@ -6,6 +7,7 @@ function Promo(props) {
         <h1 className="promo__title">
           Учебный проект студента факультета Веб-разработки.
         </h1>
+        <NavTab />
       </section>
     )
   }
