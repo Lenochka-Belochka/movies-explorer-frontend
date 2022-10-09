@@ -1,39 +1,96 @@
 .header {
-  min-height: 74px;
   display: flex;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  background-color: white;
+  padding: 18px 70px 18px 70px;
 }
-@media screen and (max-width: 768px) {
-  .header {
-    margin-bottom: 10px;
-  }
+
+.header__pages {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;;
+  padding: 18px 70px 18px 70px;
 }
-.header__logo {
-  width: 38px;
-  height: 38px;
-  background-image: url("../../images/logo.svg");
-  background-size: contain;
-  background-position: center center;
+
+.header__menu {
+  display: flex;
+  align-items: center;
+  text-align: right;
+  gap: 30px;
+}
+
+.header__register {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: black;
+  background-color: transparent;
   background-repeat: no-repeat;
-  cursor: pointer;
-  transition: 1s;
-  margin-top: 18px;
-  margin-left: 70px;
+  margin: 0;
+  text-decoration: none;
+  text-align: none;
 }
-.header__logo:hover {
-  opacity: 0.7;
+
+.header__register:hover {
+  transition: 0.3s linear;
+  opacity: .8;
 }
+
+.header__login {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  background-color: #3DDC84;
+  border-radius: 3px;
+  border: none;
+  width: 76px;
+  height: 32px;
+  text-decoration: none;
+}
+
+.header__login:hover {
+  transition: 0.3s linear;
+  opacity: .8;
+}
+
+@media screen and (max-width: 424px) {
+  .header__login {
+      font-size: 10px;
+      width: 54px;
+      height: 26px;
+  }
+}
+
+
 @media screen and (max-width: 768px) {
-  .header__logo {
-    margin-left: 30px;
+  .header {
+    padding: 18px 30px 18px 30px;
+}
+  .header__pages {
+      padding: 18px 30px 18px 30px;
   }
 }
-@media screen and (max-width: 480px) {
+
+@media screen and (max-width: 320px) {
   .header {
-    width: 91.25%;
-    margin: auto;
+    padding: 18px 14px 18px 14px;
+}
+  .header__pages {
+      padding: 18px 14px 18px 14px;
   }
-  .header__logo {
-    margin-left: 0;
-  }
+  .header__menu:last-of-type {
+    padding-right: 14px;
+}
+.header__menu {
+  gap: 14px;
+}
+.header__register {
+  font-size: 10px;
+}
 }

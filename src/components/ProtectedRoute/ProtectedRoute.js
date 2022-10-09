@@ -1,6 +1,7 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
-const ProtectedRoute = ({ isLogged, ...routeProps }) => {
-  return isLogged ? <Route {...routeProps} /> : <Redirect to="/" />;
-};
+import { Navigate } from "react-router-dom";
+
+function ProtectedRoute({ children, ...props }) {
+    return props.loggedIn ? children : <Navigate replace to="/" />;
+}
 export default ProtectedRoute;

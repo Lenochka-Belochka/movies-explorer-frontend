@@ -144,15 +144,8 @@
   background: white;
   cursor: auto;
 }
-.login__fieldset {
-  padding: 0;
-  border: none;
-}
-.login__bottom {
-  display: flex;
-  flex-direction: column;
-  align-content: flex-end;
-}
+
+
 @media screen and (max-width: 768px) {
   .login__logo {
     margin-top: 232px;
@@ -164,7 +157,7 @@
     padding-bottom: 232px;
   }
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 320px) {
   .login {
     width: 260px;
   }

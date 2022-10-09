@@ -1,4 +1,3 @@
-
 .card {
   display: flex;
   flex-direction: column;
@@ -15,18 +14,15 @@
   width: 100%;
 
 }
-
 .card__link_trailer {
   text-decoration: none;
 }
 .card__link_trailer:hover {
   opacity: 0.8;
 }
-
 .none {
   display: none;
 }
-
 .card__head {
   display: flex;
   justify-content: space-between;
@@ -49,8 +45,6 @@
   display: flex;
   justify-content: center;
 }
-
-
 .card__like {
   margin: 18px;
   width: 100px;
@@ -93,7 +87,6 @@
   margin: 0;
 }
 
-
 @media screen and (max-width: 768px) {
   .card__delete {
     margin: 18px 121px;
@@ -116,4 +109,3 @@
     margin: 14px 100px;
   }
 }
-
