@@ -10,7 +10,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-responsive": "^9.0.0-beta.10",
-    "react-router-dom": "^6.4.1",
+    "react-router-dom": "^5.3.4",
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.1",
     "validator": "^13.7.0",
@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "scp -r ./build/* lunatic@130.193.38.37:/home/lunatic/frontend/movies-explorer-frontend"
+    "deploy": "scp -r ./build/* lunatic@51.250.69.136:/home/lunatic/frontend/movies-explorer-frontend"
   },
   "eslintConfig": {
     "extends": [

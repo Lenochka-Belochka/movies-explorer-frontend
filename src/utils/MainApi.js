@@ -1,92 +1,98 @@
-import { MAIN_URL } from './constants';
+import { BASE_URL } from './constants.js';
 
-class MainApi {
-    constructor({ baseUrl }) {
-        this._baseUrl = baseUrl;
-    }
+class Api {
+  constructor({ baseUrl }) {
+    this._baseUrl = baseUrl;
+  }
 
-    get _headers() {
-        return {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
-        }
-    }
+  async _requestResult(res) {
+    const result = await res.json();
+    return res.ok ? result : Promise.reject(result.message);
+  }
 
-    _checkServerResponse(res) {
-        if (res.ok) {
-            return res.json();
-        } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-        }
-    }
+  createUser(name, email, password) {
+    return fetch(`${this._baseUrl}/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    }).then(res => this._requestResult(res));
+  }
 
-    register = ({ name, email, password }) => {
-        return fetch(`${this._baseUrl}/signup`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, password })
-        })
-            .then(this._checkServerResponse)
-    }
 
-    authorize = ({ email, password }) => {
-        return fetch(`${this._baseUrl}/signin`, {
-            method: 'POST',
-            headers: this._headers,
-            body: JSON.stringify({ email, password })
-        })
-            .then(this._checkServerResponse)
-    }
+  login(email, password) {
+    return fetch(`${this._baseUrl}/signin`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    }).then(res => this._requestResult(res));
+  }
 
-    getUserInfo = () => {
-        return fetch(`${this._baseUrl}/users/me`, {
-            method: 'GET',
-            headers: this._headers,
-        })
-            .then(this._checkServerResponse)
-    }
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    }).then(res => this._requestResult(res));
+  }
 
-    editProfile({ name, email }) {
-        return fetch(`${this._baseUrl}/users/me`, {
-            method: "PATCH",
-            headers: this._headers,
-            body: JSON.stringify({ name, email })
-        })
-            .then(this._checkServerResponse)
-    }
+  updateUser(name, email) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email }),
+    }).then(res => this._requestResult(res));
+  }
 
-    saveMovie(data) {
-        return fetch(`${this._baseUrl}/movies`, {
-            method: "POST",
-            headers: this._headers,
-            body: JSON.stringify(data)
-        })
-            .then(this._checkServerResponse)
-    }
+  getSavedMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    }).then(res => this._requestResult(res));
+  }
 
-    getSavedMovies() {
-        return fetch(`${this._baseUrl}/movies`, {
-            method: 'GET',
-            headers: this._headers,
-        })
-            .then(this._checkServerResponse)
-    }
+  addNewMovie(data) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: data.image,
+        trailerLink: data.trailerLink,
+        thumbnail: data.thumbnail,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      }),
+    }).then(res => this._requestResult(res));
+  }
 
-    deleteSaveMovie(id) {
-        return fetch(`${this._baseUrl}/movies/${id}`, {
-            method: "DELETE",
-            headers: this._headers,
-        })
-            .then(this._checkServerResponse)
-    }
+  deleteMovie(data) {
+    return fetch(`${this._baseUrl}/movies/${data}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    }).then(res => this._requestResult(res));
+  }
 }
 
-const mainApi = new MainApi({
-    baseUrl: `${MAIN_URL}`,
+const mainApi = new Api({
+  baseUrl: BASE_URL,
 });
 
 export default mainApi;

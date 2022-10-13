@@ -54,7 +54,7 @@ function Navigation({ loggedIn }) {
                                 isActive ? "navigation__login-active" : "navigation__login"
                             } to="/profile">Аккаунт</NavLink>
 
-                            <Link className="navigation__account" to="/profile" src={accountLogo} alt='изображение человечка'></Link>
+                            <Link className="navigation__account" to="/profile" src={accountLogo} alt='изображение логотипа'></Link>
                         </nav>
 
                     </div>

@@ -1,16 +1,28 @@
-export const SHORT_MOVIE = 40;
+const BASE_URL = 'https://api.movies.lunatic.luntic.nomoredomains.sbs';
+const MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
+const MOVIES_DURATION = 40;
+const SCREEN_PARAMS = {
+  desktop: {
+    width: 917,
+    cards: {
+      total: 12,
+      more: 3,
+    },
+  },
+  tablet: {
+    width: 583,
+    cards: {
+      total: 8,
+      more: 2,
+    },
+  },
+  mobile: {
+    width: 583,
+    cards: {
+      total: 5,
+      more: 2,
+    },
+  },
+};
 
-export const MAIN_URL = 'https://api.movies.lunatic.luntic.nomoredomains.sbs';
-export const MOVIE_URL = 'https://api.nomoreparties.co/';
-
-export const ELEMENTS_SIZE_DESKTOP = 1024;
-export const START_FILMS_DESKTOP = 12;
-export const LOADING_MORE_BUTTON_DESKTOP = 3;
-
-export const ELEMENTS_SIZE_MOBILE = 480;
-export const START_FILMS_MOBILE = 5;
-export const LOADING_MORE_BUTTON_MOBILE = 2;
-
-
-export const ELEMENTS_SIZE_TABLET = 768;
-export const START_FILMS_TABLET = 8;
+export { BASE_URL, MOVIES_URL, MOVIES_DURATION, SCREEN_PARAMS };

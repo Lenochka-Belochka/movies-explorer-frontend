@@ -52,7 +52,6 @@
 .navigation__link_active {
     font-weight: 400;
     margin: 0;
-    text-decoration: none;
     font-style: normal;
     font-size: 14px;
     line-height: 18px;
@@ -60,7 +59,7 @@
     display: flex;
     text-align: left;
     color: black;
-}
+  }
 
 .navigation__account-data {
     display: flex;

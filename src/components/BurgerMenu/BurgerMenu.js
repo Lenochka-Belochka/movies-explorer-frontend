@@ -19,7 +19,7 @@ function BurgerMenu({ onClick, isOpen, onClose }) {
 
                     <NavLink className={({ isActive }) =>
                         isActive ? "burger-menu__link_active" : "burger-menu__link"
-                    } to="/">Главная</NavLink>
+                    } exact to='/'>Главная</NavLink>
 
                     <NavLink className={({ isActive }) =>
                         isActive ? "burger-menu__link_active" : "burger-menu__link"

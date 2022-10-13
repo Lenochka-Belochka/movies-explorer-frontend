@@ -1,8 +1,8 @@
+
 .card {
   display: flex;
   flex-direction: column;
   height: 319px;
-  width: 360;
   list-style-type: none;
   background: #fdfdfd;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
@@ -12,6 +12,7 @@
   object-fit: cover;
   background-position: center;
   width: 100%;
+  display: block;
 
 }
 .card__link_trailer {
@@ -20,9 +21,11 @@
 .card__link_trailer:hover {
   opacity: 0.8;
 }
+
 .none {
   display: none;
 }
+
 .card__head {
   display: flex;
   justify-content: space-between;
@@ -45,6 +48,8 @@
   display: flex;
   justify-content: center;
 }
+
+
 .card__like {
   margin: 18px;
   width: 100px;
@@ -86,6 +91,7 @@
   color: #a0a0a0;
   margin: 0;
 }
+
 
 @media screen and (max-width: 768px) {
   .card__delete {

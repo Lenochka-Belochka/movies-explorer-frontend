@@ -1,15 +1,17 @@
-.App {
-  /*margin: 0 auto;*/
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.app {
+  background-color: #ffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
   font-family: 'Inter', Arial, sans-serif;
+  color: black;
+  overflow: hidden;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  min-height: 100vh;
-  /*min-width: 320px;*/
-  display: flex;
-  flex-direction: column;
-  background-color: white;
 }

@@ -1,31 +1,25 @@
-import { MOVIE_URL } from './constants';
+import { MOVIES_URL } from './constants';
 
 class MoviesApi {
-    constructor({ baseUrl }) {
-        this._baseUrl = baseUrl;
-    }
+  constructor({ baseUrl }) {
+    this._baseUrl = baseUrl;
+  }
 
-    _checkServerResponse(res) {
-        if (res.ok) {
-            return res.json();
-        } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-        }
-    }
+  async _requestResult(res) {
+    const result = await res.json();
+    return res.ok ? result : Promise.reject(res);
+  }
 
-    getInitialMovies() {
-        return fetch(`${this._baseUrl}/beatfilm-movies`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(this._checkServerResponse)
-    }
+  getMovies() {
+    return fetch(`${this._baseUrl}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    }).then((res) => this._requestResult(res));
+  }
 }
 
 const moviesApi = new MoviesApi({
-    baseUrl: `${MOVIE_URL}`,
+  baseUrl: MOVIES_URL,
 });
 
 export default moviesApi;

@@ -73,7 +73,6 @@
 }
 
 
-
 .burger-menu__link {
     font-style: normal;
     font-weight: 500;
@@ -84,7 +83,7 @@
     text-decoration: none;
 }
 
-.burger-menu__link_active {
+.burger-menu__link.active {
     text-decoration: underline;
     font-style: normal;
     font-weight: 500;

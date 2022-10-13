@@ -8,6 +8,7 @@
   margin: 0 auto;
 }
 
+
 .register__title {
   font-size: 24px;
   font-style: normal;
@@ -33,7 +34,6 @@
   transition: 1s;
 }
 .register__form {
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 396px;

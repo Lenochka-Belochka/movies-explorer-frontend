@@ -1,4 +1,3 @@
-
 .movie-card-list {
   padding-top: 60px;
   border-top: 1px solid #e8e8e8;
@@ -7,8 +6,8 @@
 }
 .movies__films {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px 24px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px 28px;
   padding: 0;
 }
 

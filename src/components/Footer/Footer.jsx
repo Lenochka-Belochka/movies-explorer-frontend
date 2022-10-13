@@ -3,6 +3,7 @@ export const Footer = () => {
   return (
     <>
       <footer className="footer">
+      <div className="footer__container">
         <h6 className="footer__title">
           Учебный проект Яндекс.Практикум х BeatFilm.
         </h6>
@@ -26,6 +27,7 @@ export const Footer = () => {
               Github
             </a>
           </div>
+        </div>
         </div>
       </footer>
     </>

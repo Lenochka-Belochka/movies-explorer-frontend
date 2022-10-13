@@ -35,7 +35,6 @@
   margin-bottom: 40px;
 }
 .login__form {
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 396px;
@@ -132,6 +131,7 @@
   text-align: center;
   color: #ffffff;
   margin-bottom: 16px;
+  margin-top: 179px;
   cursor: pointer;
   transition: 1s;
 }
@@ -144,8 +144,15 @@
   background: white;
   cursor: auto;
 }
-
-
+.login__fieldset {
+  padding: 0;
+  border: none;
+}
+.login__bottom {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+}
 @media screen and (max-width: 768px) {
   .login__logo {
     margin-top: 232px;
@@ -157,7 +164,7 @@
     padding-bottom: 232px;
   }
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 420px) {
   .login {
     width: 260px;
   }
